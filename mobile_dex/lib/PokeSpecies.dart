@@ -388,3 +388,23 @@ class NameAndURL {
     return data;
   }
 }
+
+class FormDescription{
+  String description;
+  NameAndURL language;
+  FormDescription.fromJson(Map<String, dynamic> json) {
+    if(json!=null)description = json['description'].toString();
+    else description = "None.";
+    if(json!=null)language = NameAndURL.fromJson(json['language']);
+    else language = new NameAndURL.fromJson({'name': 'none', 'url':'none'});
+    
+  }
+
+  Map<String, dynamic> toJson(){
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['description'] = this.description;
+    data['language'] = this.language;
+    return data;
+  }
+
+}

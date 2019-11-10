@@ -6,7 +6,6 @@ import 'pokemon.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_dex/PokeSpecies.dart';
 
-class PokeAPIInformation {}
 
 class PokeInfo extends StatefulWidget {
   final Pokemon currentPokemon;
@@ -86,6 +85,7 @@ class _PokeInfoState extends State<PokeInfo> {
                     height: 150,
                     width: 150,
                     child: Card(
+                      elevation: 5,
                       shape: CircleBorder(),
                       child: Container(
                         decoration: BoxDecoration(
