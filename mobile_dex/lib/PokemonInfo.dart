@@ -5,6 +5,10 @@ import 'dart:convert';
 import 'pokemon.dart';
 import 'package:http/http.dart' as http;
 
+class PokeAPIInformation {
+  
+}
+
 class PokeInfo extends StatelessWidget {
   final Pokemon currentPokemon;
   Map colorTypeMap;
@@ -129,12 +133,12 @@ class PokeInfo extends StatelessWidget {
     print(res.body);
     print(speciesRes.body);
 
-    theUrl = decodedJson;
-
-    abilities = new List.from(decodedJson['abilities']);
-    species = (new Map<String, dynamic>.from(
-        (new List.from(decodedSpecies['genera']))[2]))['genus'];
-    print("SPECIES: " + species);
+//    theUrl = decodedJson;
+//
+//    abilities = new List.from(decodedJson['abilities']);
+//    print("!!!ABILITIES: " + abilities[0]);
+//    species = (new Map<String, dynamic>.from(
+//        (new List.from(decodedSpecies['genera']))[2]))['genus'];
   }
 
   @override
@@ -157,7 +161,14 @@ class PokeInfo extends StatelessWidget {
 //                image: DecorationImage(
 //                    image: AssetImage("assets/images/bg.gif"),
 //                    fit: BoxFit.cover))));
-      body: mainBody(context),
+      body:
+      species == null?
+      Center(
+        child: CircularProgressIndicator(
+
+        ),
+      ):
+      mainBody(context),
     );
 
   }
