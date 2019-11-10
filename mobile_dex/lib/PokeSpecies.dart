@@ -66,7 +66,8 @@ class PokemonSpecies {
     evolutionChain = json['evolution_chain'] != null
         ? new EvolutionChain.fromJson(json['evolution_chain'])
         : null;
-    evolvesFromSpecies = NameAndURL.fromJson(json['evolves_from_species']);
+    NameAndURL.fromJson(json['evolves_from_species'])!=null?
+    evolvesFromSpecies = NameAndURL.fromJson(json['evolves_from_species']):evolvesFromSpecies = null;
     if (json['flavor_text_entries'] != null) {
       flavorTextEntries = new List<FlavorTextEntries>();
       json['flavor_text_entries'].forEach((v) {
@@ -374,8 +375,10 @@ class NameAndURL {
   String url;
 
   NameAndURL.fromJson(Map<String, dynamic> json) {
-    name = json['name'].toString();
-    url = json['url'].toString();
+    if(json!=null)name = json['name'].toString();
+    else name = "None.";
+    if(json!=null)url = json['url'].toString();
+    else url = "None.";
   }
 
   Map<String, dynamic> toJson(){
