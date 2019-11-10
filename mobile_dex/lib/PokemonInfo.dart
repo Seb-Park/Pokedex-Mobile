@@ -4,96 +4,101 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'pokemon.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_dex/PokeSpecies.dart';
 
-class PokeAPIInformation {
-  
+class PokeAPIInformation {}
+
+class PokeInfo extends StatefulWidget {
+  final Pokemon currentPokemon;
+
+  PokeInfo(
+      {this.currentPokemon});
+  @override
+  _PokeInfoState createState() => _PokeInfoState();
 }
 
-class PokeInfo extends StatelessWidget {
-  final Pokemon currentPokemon;
+class _PokeInfoState extends State<PokeInfo> {
   Map colorTypeMap;
-  var theUrl;
-  PokeInfo(
-      {this.currentPokemon}); //I'm pretty sure that this means that the constructor requires a pokemon
 
-//  mainBody(BuildContext context) => Stack(
-//
-//
-//  );
+  var theUrl;
+
+  PokemonSpecies currentPokemonSpecies;
 
   List<String> abilities;
+
   String species;
 
   mainBody(BuildContext context) => Stack(
+        children: <Widget>[
+          Container(
+            color: colorTypeMap[widget.currentPokemon.type[0]],
+          ),
 
-    children: <Widget>[
-      Container(
-        color: colorTypeMap[currentPokemon.type[0]],
-      ),
-      Positioned(
+          Positioned(
+            height: MediaQuery.of(context).size.height / 1.5,
+            width: MediaQuery.of(context).size.width/1,
+//            left: MediaQuery.of(context).size.width,
+            top: MediaQuery.of(context).size.height / 15,
 
-        height: MediaQuery.of(context).size.height / 1.7,
-        width: MediaQuery.of(context).size.width,
-        top: MediaQuery.of(context).size.height / 15,
 //            decoration: BoxDecoration(
 //                image: DecorationImage(
 //                    image: AssetImage("assets/images/bg.gif"),
 //                    fit: BoxFit.cover)),
-        child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)),
-            elevation: 2.0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                SizedBox(height: 30),
+            child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                elevation: 2.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    SizedBox(height: 80),
 //                    Text(
 //                      currentPokemon.name,
 //                      style:
 //                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
 //                    ),
-                Text(
-                  "Pokedex No. " + currentPokemon.num,
-                  style: TextStyle(fontWeight: FontWeight.w100),
-                ),
-                Text("The $species"),
-                Text("Abilities" + abilities.toString() +theUrl),
+                    Text(
+                      "Pokedex No. " + widget.currentPokemon.num,
+                      style: TextStyle(fontWeight: FontWeight.w100),
+                    ),
+                    currentPokemonSpecies == null ? Text("The pokemon")
+                        : Text("The " + currentPokemonSpecies.genera[2].genus),
+                    Text(currentPokemonSpecies.flavorTextEntries[1].flavorText, textAlign: TextAlign.center,),
+                    Text("Abilities" + abilities.toString() + theUrl),
 
-
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: currentPokemon.type
-                      .map((t) => FilterChip(
-                      backgroundColor: colorTypeMap[t],
-                      label: Text(t),
-                      onSelected: (b) {}))
-                      .toList(),
-                ),
-              ],
-            )),
-      ),
-      Align(
-          alignment: Alignment.topCenter,
-          child: Hero(
-              tag: currentPokemon.img,
-              child: Container(
-                height: 150,
-                width: 150,
-                child: Card(
-                  shape: CircleBorder(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: widget.currentPokemon.type
+                          .map((t) => FilterChip(
+                              backgroundColor: colorTypeMap[t],
+                              label: Text(t),
+                              onSelected: (b) {}))
+                          .toList(),
+                    ),
+                  ],
+                )),
+          ),
+          Align(
+              alignment: Alignment.topCenter,
+              child: Hero(
+                  tag: widget.currentPokemon.img,
                   child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                "https://randompokemon.com/sprites/normal/" +
-                                    currentPokemon.id.toString() +
-                                    ".gif"))),
-                  ),
-                ),
-              )))
-    ],
-  );
+                    height: 150,
+                    width: 150,
+                    child: Card(
+                      shape: CircleBorder(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://randompokemon.com/sprites/normal/" +
+                                        widget.currentPokemon.id.toString() +
+                                        ".gif"))),
+                      ),
+                    ),
+                  )))
+        ],
+      );
 
   fetchData() async {
     colorTypeMap = {
@@ -117,10 +122,10 @@ class PokeInfo extends StatelessWidget {
       'Fairy': Colors.pink
     };
     var url = 'https://pokeapi.co/api/v2/pokemon/' +
-        currentPokemon.id.toString() +
+        widget.currentPokemon.id.toString() +
         "/";
     var speciesUrl = 'https://pokeapi.co/api/v2/pokemon-species/' +
-        currentPokemon.id.toString() +
+        widget.currentPokemon.id.toString() +
         "/";
     theUrl = speciesUrl;
 
@@ -130,9 +135,11 @@ class PokeInfo extends StatelessWidget {
     var speciesRes = await http.get(speciesUrl);
     var decodedJson = jsonDecode(res.body);
     var decodedSpecies = jsonDecode(speciesRes.body);
-    print(res.body);
-    print(speciesRes.body);
+//    print(res.body);
+//    print(speciesRes.body);
 
+    currentPokemonSpecies = PokemonSpecies.fromJson(decodedSpecies);
+    print("The " + currentPokemonSpecies.genera[2].genus.toString());
 //    theUrl = decodedJson;
 //
 //    abilities = new List.from(decodedJson['abilities']);
@@ -145,14 +152,15 @@ class PokeInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     fetchData();
+//    print("The color of this pokemon is " + currentPokemonSpecies.color.name);
 //    while(species == null) {}
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorTypeMap[currentPokemon.type[0]],
+        backgroundColor: colorTypeMap[widget.currentPokemon.type[0]],
         centerTitle: true,
         elevation: 0.0,
         title: Text(
-          currentPokemon.name,
+          widget.currentPokemon.name,
           textAlign: TextAlign.center,
         ),
       ),
@@ -162,14 +170,13 @@ class PokeInfo extends StatelessWidget {
 //                    image: AssetImage("assets/images/bg.gif"),
 //                    fit: BoxFit.cover))));
       body:
-      species == null?
+      currentPokemonSpecies == null?
       Center(
         child: CircularProgressIndicator(
-
+          //TODO: This will go on forever unless you do a quick reload in Android Studio in which case it will show the pokemon
         ),
       ):
-      mainBody(context),
+          mainBody(context),
     );
-
   }
 }

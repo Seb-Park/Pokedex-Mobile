@@ -4,7 +4,7 @@ class PokemonSpecies {
   Color color;
   List<NameAndURL> eggGroups;
   EvolutionChain evolutionChain;
-  Null evolvesFromSpecies;
+  NameAndURL evolvesFromSpecies;
   List<FlavorTextEntries> flavorTextEntries;
   List<Null> formDescriptions;
   bool formsSwitchable;
@@ -53,6 +53,7 @@ class PokemonSpecies {
       this.varieties});
 
   PokemonSpecies.fromJson(Map<String, dynamic> json) {
+    print('decoding this species');
     baseHappiness = json['base_happiness'];
     captureRate = json['capture_rate'];
     color = json['color'] != null ? new Color.fromJson(json['color']) : null;
@@ -65,7 +66,7 @@ class PokemonSpecies {
     evolutionChain = json['evolution_chain'] != null
         ? new EvolutionChain.fromJson(json['evolution_chain'])
         : null;
-    evolvesFromSpecies = json['evolves_from_species'];
+    evolvesFromSpecies = NameAndURL.fromJson(json['evolves_from_species']);
     if (json['flavor_text_entries'] != null) {
       flavorTextEntries = new List<FlavorTextEntries>();
       json['flavor_text_entries'].forEach((v) {
