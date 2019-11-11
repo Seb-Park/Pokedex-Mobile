@@ -6,7 +6,7 @@ class PokemonSpecies {
   EvolutionChain evolutionChain;
   NameAndURL evolvesFromSpecies;
   List<FlavorTextEntries> flavorTextEntries;
-  List<Null> formDescriptions;
+  List<FormDescription> formDescriptions;
   bool formsSwitchable;
   int genderRate;
   List<Genera> genera;
@@ -75,9 +75,9 @@ class PokemonSpecies {
       });
     }
     if (json['form_descriptions'] != null) {
-      formDescriptions = new List<Null>();
+      formDescriptions = new List<FormDescription>();
       json['form_descriptions'].forEach((v) {
-        formDescriptions.add(null);
+        formDescriptions.add(FormDescription.fromJson(v));
       });
     }
     formsSwitchable = json['forms_switchable'];
