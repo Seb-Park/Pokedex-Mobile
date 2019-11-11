@@ -65,7 +65,8 @@ class _PokeInfoState extends State<PokeInfo> {
                         ? Text("The pokemon")
                         : Text("The " + currentPokemonSpecies.genera[2].genus),
                     Text(
-                      currentPokemonSpecies.flavorTextEntries[1].flavorText.replaceAll("\n", " "),
+                      currentPokemonSpecies.flavorTextEntries[1].flavorText
+                          .replaceAll("\n", " "),
                       textAlign: TextAlign.center,
                     ),
                     Text("Abilities: "),
@@ -74,7 +75,11 @@ class _PokeInfoState extends State<PokeInfo> {
                       children: currentPokeApiData.abilities
                           .map((t) => FilterChip(
                               backgroundColor: colorAbilitiesMap[t.isHidden],
-                              label: Text(t.ability.name.toString()),
+                              label: Text(
+                                t.ability.name.toString().toUpperCase(),
+                                style:
+                                    new TextStyle(fontWeight: FontWeight.w300),
+                              ),
                               onSelected: (b) {}))
                           .toList(),
                     ),
@@ -111,47 +116,46 @@ class _PokeInfoState extends State<PokeInfo> {
                       ),
                     ),
                   ))),
-          currentPokemonSpecies.evolvesFromSpecies!=null?
-          Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                  height: 75,
-                  width: 75,
-                  child: Card(
-                    elevation: 5,
-                    shape: CircleBorder(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-
-                              image: NetworkImage(
-                                  "https://randompokemon.com/sprites/normal/" +
-                                      (widget.currentPokemon.id-1).toString() +
-                                      ".gif"))),
-                    ),
-                  ))):
-          Container(),
-
-          widget.currentPokemon.nextEvolution!=null?
-          Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                  height: 75,
-                  width: 75,
-                  child: Card(
-                    elevation: 5,
-                    shape: CircleBorder(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://randompokemon.com/sprites/normal/" +
-                                      (widget.currentPokemon.id+1).toString() +
-                                      ".gif"))),
-                    ),
-                  ))):
-          Container(),
-
+          currentPokemonSpecies.evolvesFromSpecies != null
+              ? Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                      height: 75,
+                      width: 75,
+                      child: Card(
+                        elevation: 5,
+                        shape: CircleBorder(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "https://randompokemon.com/sprites/normal/" +
+                                          (widget.currentPokemon.id - 1)
+                                              .toString() +
+                                          ".gif"))),
+                        ),
+                      )))
+              : Container(),
+          widget.currentPokemon.nextEvolution != null
+              ? Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                      height: 75,
+                      width: 75,
+                      child: Card(
+                        elevation: 5,
+                        shape: CircleBorder(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "https://randompokemon.com/sprites/normal/" +
+                                          (widget.currentPokemon.id + 1)
+                                              .toString() +
+                                          ".gif"))),
+                        ),
+                      )))
+              : Container(),
         ],
       );
 
