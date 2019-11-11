@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:camera/camera.dart';
+
+import 'Camera.dart';
 import 'pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -7,8 +10,7 @@ import 'package:vibration/vibration.dart';
 
 import 'PokemonInfo.dart';
 
-void main() =>
-    runApp(MaterialApp(
+void main() => runApp(MaterialApp(
       title: 'Pokédex',
       home: HomePage(),
       debugShowCheckedModeBanner: false,
@@ -54,75 +56,72 @@ class _HomePageState extends State<HomePage> {
       ),
       body: hub == null
           ? Center(
-        child: CircularProgressIndicator(
-
-        ),
-      )
+              child: CircularProgressIndicator(),
+            )
           : GridView.count(
-        crossAxisCount: 3,
-        children: hub.pokemon
-            .map((poke) =>
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              PokeInfo(
-                                currentPokemon: poke,
-                              )));
-                },
-                splashColor: Colors.white,
-                child: Hero(
-                    tag: poke.img,
-                    child: Container(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
+              crossAxisCount: 3,
+              children: hub.pokemon
+                  .map((poke) => Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PokeInfo(
+                                          currentPokemon: poke,
+                                        )));
+                          },
+                          splashColor: Colors.white,
+                          child: Hero(
+                              tag: poke.img,
+                              child: Container(
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
 //                            shape: CircleBorder(),
-                        elevation: 2.0,
-                        child: Column(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Container(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PokeInfo(
-                                                currentPokemon: poke,
-                                              )));
-                                },
-                                splashColor: Colors.cyan,
-                              ),
-                              height: 100,
-                              width: 100,
-
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  elevation: 2.0,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Container(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PokeInfo(
+                                                          currentPokemon: poke,
+                                                        )));
+                                          },
+                                          splashColor: Colors.cyan,
+                                        ),
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
 //                                        alignment: Alignment.topCenter,
-                                      image: NetworkImage(poke.img)) == null
-                                      ? DecorationImage(
-                                      image: NetworkImage(
-                                          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"))
-                                      : DecorationImage(
-                                      image: NetworkImage(poke.img))),
-                            ),
+                                                        image: NetworkImage(
+                                                            poke.img)) ==
+                                                    null
+                                                ? DecorationImage(
+                                                    image: NetworkImage(
+                                                        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"))
+                                                : DecorationImage(
+                                                    image: NetworkImage(
+                                                        poke.img))),
+                                      ),
 //                              Text(poke.name,style: TextStyle(fontFamily: ''))
-                          ],
+                                    ],
+                                  ),
+                                ),
+                              )),
                         ),
-                      ),
-                    )
-                ),
-              ),
-            ))
-            .toList(),
-      ),
+                      ))
+                  .toList(),
+            ),
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
@@ -149,16 +148,22 @@ class _HomePageState extends State<HomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
+
+          final cameras = await availableCameras();
+          final firstCamera = cameras.first;
           if (Vibration.hasVibrator() != null) {
             Vibration.vibrate(duration: 50);
             print(Vibration.hasVibrator());
           }
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SnapScreen(
+            camera: firstCamera,
+          )));
         },
-
         backgroundColor: Colors.deepOrange,
         child: Icon(Icons.camera),
-      ) ,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 //      floatingActionButton:
     );
