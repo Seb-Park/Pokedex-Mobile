@@ -74,11 +74,17 @@ class _PokeInfoState extends State<PokeInfo> {
                     currentPokemonSpecies == null
                         ? Text("The pokemon")
                         : Text("The " + currentPokemonSpecies.genera[2].genus),
+                    currentPokemonSpecies.flavorTextEntries[1].language.name == 'en'?
                     Text(
                       currentPokemonSpecies.flavorTextEntries[1].flavorText
                           .replaceAll("\n", " "),
                       textAlign: TextAlign.center,
-                    ),
+                    ):Text(
+                      currentPokemonSpecies.flavorTextEntries[2].flavorText
+                          .replaceAll("\n", " "),
+                      textAlign: TextAlign.center,
+                    )
+                    ,
                     Text("Abilities: "),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

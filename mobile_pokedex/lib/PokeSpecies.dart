@@ -230,28 +230,28 @@ class EvolutionChain {
 
 class FlavorTextEntries {
   String flavorText;
-  String language;
-  String version;
+  NameAndURL language;
+  NameAndURL version;
 
   FlavorTextEntries({this.flavorText, this.language, this.version});
 
   FlavorTextEntries.fromJson(Map<String, dynamic> json) {
     flavorText = json['flavor_text'];
     language = json['language'] != null
-        ? new NameAndURL.fromJson(json['language']).toString()
+        ? new NameAndURL.fromJson(json['language'])
         : null;
     version =
-        json['version'] != null ? new NameAndURL.fromJson(json['version']).toString() : null;
+        json['version'] != null ? new NameAndURL.fromJson(json['version']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['flavor_text'] = this.flavorText;
     if (this.language != null) {
-      data['language'] = this.language;
+      data['language'] = this.language.toJson();
     }
     if (this.version != null) {
-      data['version'] = this.version;
+      data['version'] = this.version.toJson();
     }
     return data;
   }
