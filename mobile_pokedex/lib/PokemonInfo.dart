@@ -7,12 +7,11 @@ import 'pokemon.dart';
 import 'package:http/http.dart' as http;
 import 'PokeSpecies.dart';
 
-
 class PokeInfo extends StatefulWidget {
   final Pokemon currentPokemon;
 
-  PokeInfo(
-      {this.currentPokemon});
+  PokeInfo({this.currentPokemon});
+
   @override
   _PokeInfoState createState() => _PokeInfoState();
 }
@@ -35,10 +34,9 @@ class _PokeInfoState extends State<PokeInfo> {
           Container(
             color: colorTypeMap[widget.currentPokemon.type[0]],
           ),
-
           Positioned(
             height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width/1,
+            width: MediaQuery.of(context).size.width / 1,
 //            left: MediaQuery.of(context).size.width,
             top: MediaQuery.of(context).size.height / 15,
 
@@ -63,17 +61,21 @@ class _PokeInfoState extends State<PokeInfo> {
                       "Pokedex No. " + widget.currentPokemon.num,
                       style: TextStyle(fontWeight: FontWeight.w100),
                     ),
-                    currentPokemonSpecies == null ? Text("The pokemon")
+                    currentPokemonSpecies == null
+                        ? Text("The pokemon")
                         : Text("The " + currentPokemonSpecies.genera[2].genus),
-                    Text(currentPokemonSpecies.flavorTextEntries[1].flavorText, textAlign: TextAlign.center,),
+                    Text(
+                      currentPokemonSpecies.flavorTextEntries[1].flavorText.replaceAll("\n", " "),
+                      textAlign: TextAlign.center,
+                    ),
                     Text("Abilities: "),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: currentPokeApiData.abilities
                           .map((t) => FilterChip(
-                          backgroundColor: colorAbilitiesMap[t.isHidden],
-                          label: Text(t.ability.name.toString()),
-                          onSelected: (b) {}))
+                              backgroundColor: colorAbilitiesMap[t.isHidden],
+                              label: Text(t.ability.name.toString()),
+                              onSelected: (b) {}))
                           .toList(),
                     ),
 
@@ -109,6 +111,47 @@ class _PokeInfoState extends State<PokeInfo> {
                       ),
                     ),
                   ))),
+          currentPokemonSpecies.evolvesFromSpecies!=null?
+          Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                  height: 75,
+                  width: 75,
+                  child: Card(
+                    elevation: 5,
+                    shape: CircleBorder(),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+
+                              image: NetworkImage(
+                                  "https://randompokemon.com/sprites/normal/" +
+                                      (widget.currentPokemon.id-1).toString() +
+                                      ".gif"))),
+                    ),
+                  ))):
+          Container(),
+
+          widget.currentPokemon.nextEvolution!=null?
+          Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                  height: 75,
+                  width: 75,
+                  child: Card(
+                    elevation: 5,
+                    shape: CircleBorder(),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://randompokemon.com/sprites/normal/" +
+                                      (widget.currentPokemon.id+1).toString() +
+                                      ".gif"))),
+                    ),
+                  ))):
+          Container(),
+
         ],
       );
 
@@ -133,10 +176,7 @@ class _PokeInfoState extends State<PokeInfo> {
       'Dragon': Colors.purple,
       'Fairy': Colors.pink
     };
-    colorAbilitiesMap = {
-      true: Colors.pink,
-      false: null
-    };
+    colorAbilitiesMap = {true: Colors.pink, false: null};
     var url = 'https://pokeapi.co/api/v2/pokemon/' +
         widget.currentPokemon.id.toString() +
         "/";
@@ -161,7 +201,7 @@ class _PokeInfoState extends State<PokeInfo> {
     setState(() {});
   }
 
-  rebuildFrame() async{
+  rebuildFrame() async {
     setState(() {});
   }
 
@@ -194,13 +234,11 @@ class _PokeInfoState extends State<PokeInfo> {
 //                image: DecorationImage(
 //                    image: AssetImage("assets/images/bg.gif"),
 //                    fit: BoxFit.cover))));
-      body:
-      currentPokemonSpecies == null?
-      Center(
-        child: CircularProgressIndicator(
-        ),
-      ):
-          mainBody(context),
+      body: currentPokemonSpecies == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : mainBody(context),
     );
   }
 }

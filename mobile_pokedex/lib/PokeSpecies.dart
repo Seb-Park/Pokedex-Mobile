@@ -66,8 +66,9 @@ class PokemonSpecies {
     evolutionChain = json['evolution_chain'] != null
         ? new EvolutionChain.fromJson(json['evolution_chain'])
         : null;
-    NameAndURL.fromJson(json['evolves_from_species'])!=null?
+    json['evolves_from_species']!=null?
     evolvesFromSpecies = NameAndURL.fromJson(json['evolves_from_species']):evolvesFromSpecies = null;
+    print("$name doesn't evolve from anything");
     if (json['flavor_text_entries'] != null) {
       flavorTextEntries = new List<FlavorTextEntries>();
       json['flavor_text_entries'].forEach((v) {
