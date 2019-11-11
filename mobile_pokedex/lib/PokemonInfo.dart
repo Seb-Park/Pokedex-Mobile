@@ -32,7 +32,17 @@ class _PokeInfoState extends State<PokeInfo> {
   mainBody(BuildContext context) => Stack(
         children: <Widget>[
           Container(
-            color: colorTypeMap[widget.currentPokemon.type[0]],
+//            color: colorTypeMap[widget.currentPokemon.type[0]],
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  colorTypeMap[widget.currentPokemon.type[0]][700],
+                  colorTypeMap[widget.currentPokemon.type[0]][100]
+                ]
+              )
+            ),
           ),
           Positioned(
             height: MediaQuery.of(context).size.height / 1.5,
@@ -225,7 +235,7 @@ class _PokeInfoState extends State<PokeInfo> {
 //    while(species == null) {}
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorTypeMap[widget.currentPokemon.type[0]],
+        backgroundColor: colorTypeMap[widget.currentPokemon.type[0]][700],
         centerTitle: true,
         elevation: 0.0,
         title: Text(
