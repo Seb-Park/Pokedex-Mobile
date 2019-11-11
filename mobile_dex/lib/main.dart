@@ -3,6 +3,8 @@ import 'pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:vibration/vibration.dart';
+
 import 'PokemonInfo.dart';
 
 void main() =>
@@ -147,7 +149,12 @@ class _HomePageState extends State<HomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          if (Vibration.hasVibrator() != null) {
+            Vibration.vibrate(duration: 50);
+            print(Vibration.hasVibrator());
+          }
+        },
 
         backgroundColor: Colors.deepOrange,
         child: Icon(Icons.camera),

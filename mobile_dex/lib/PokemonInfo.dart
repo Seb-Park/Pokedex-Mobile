@@ -146,6 +146,7 @@ class _PokeInfoState extends State<PokeInfo> {
 //    print("!!!ABILITIES: " + abilities[0]);
 //    species = (new Map<String, dynamic>.from(
 //        (new List.from(decodedSpecies['genera']))[2]))['genus'];
+    setState(() {});
   }
 
   @override
