@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'PokeApiDetails.dart';
 import 'pokemon.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_dex/PokeSpecies.dart';
@@ -18,10 +19,12 @@ class PokeInfo extends StatefulWidget {
 
 class _PokeInfoState extends State<PokeInfo> {
   Map colorTypeMap;
+  Map colorAbilitiesMap;
 
   var theUrl;
 
   PokemonSpecies currentPokemonSpecies;
+  PokeAPIData currentPokeApiData;
 
   List<String> abilities;
 
@@ -63,7 +66,16 @@ class _PokeInfoState extends State<PokeInfo> {
                     currentPokemonSpecies == null ? Text("The pokemon")
                         : Text("The " + currentPokemonSpecies.genera[2].genus),
                     Text(currentPokemonSpecies.flavorTextEntries[1].flavorText, textAlign: TextAlign.center,),
-                    Text("Abilities" + abilities.toString() + theUrl),
+                    Text("Abilities: "),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: currentPokeApiData.abilities
+                          .map((t) => FilterChip(
+                          backgroundColor: colorAbilitiesMap[t.isHidden],
+                          label: Text(t.ability.name.toString()),
+                          onSelected: (b) {}))
+                          .toList(),
+                    ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -121,6 +133,10 @@ class _PokeInfoState extends State<PokeInfo> {
       'Dragon': Colors.purple,
       'Fairy': Colors.pink
     };
+    colorAbilitiesMap = {
+      true: Colors.pink,
+      false: null
+    };
     var url = 'https://pokeapi.co/api/v2/pokemon/' +
         widget.currentPokemon.id.toString() +
         "/";
@@ -139,13 +155,9 @@ class _PokeInfoState extends State<PokeInfo> {
 //    print(speciesRes.body);
 
     currentPokemonSpecies = PokemonSpecies.fromJson(decodedSpecies);
+    currentPokeApiData = PokeAPIData.fromJson(decodedJson);
     print("The " + currentPokemonSpecies.genera[2].genus.toString());
-//    theUrl = decodedJson;
-//
-//    abilities = new List.from(decodedJson['abilities']);
-//    print("!!!ABILITIES: " + abilities[0]);
-//    species = (new Map<String, dynamic>.from(
-//        (new List.from(decodedSpecies['genera']))[2]))['genus'];
+
     setState(() {});
   }
 
