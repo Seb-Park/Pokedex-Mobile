@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'PokeApiDetails.dart';
 import 'pokemon.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_dex/PokeSpecies.dart';
+import 'PokeSpecies.dart';
 
 
 class PokeInfo extends StatefulWidget {
@@ -161,10 +161,22 @@ class _PokeInfoState extends State<PokeInfo> {
     setState(() {});
   }
 
+  rebuildFrame() async{
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    fetchData();
+//    fetchData();
+//  rebuildFrame();
 //    print("The color of this pokemon is " + currentPokemonSpecies.color.name);
 //    while(species == null) {}
     return Scaffold(
@@ -186,7 +198,6 @@ class _PokeInfoState extends State<PokeInfo> {
       currentPokemonSpecies == null?
       Center(
         child: CircularProgressIndicator(
-          //TODO: This will go on forever unless you do a quick reload in Android Studio in which case it will show the pokemon
         ),
       ):
           mainBody(context),
