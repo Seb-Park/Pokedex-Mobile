@@ -5,14 +5,13 @@ import 'dart:convert';
 import 'PokeApiDetails.dart';
 import 'pokemon.dart';
 import 'package:http/http.dart' as http;
-import 'package:mobile_dex/PokeSpecies.dart';
-
+import 'PokeSpecies.dart';
 
 class PokeInfo extends StatefulWidget {
   final Pokemon currentPokemon;
 
-  PokeInfo(
-      {this.currentPokemon});
+  PokeInfo({this.currentPokemon});
+
   @override
   _PokeInfoState createState() => _PokeInfoState();
 }
@@ -33,12 +32,21 @@ class _PokeInfoState extends State<PokeInfo> {
   mainBody(BuildContext context) => Stack(
         children: <Widget>[
           Container(
-            color: colorTypeMap[widget.currentPokemon.type[0]],
+//            color: colorTypeMap[widget.currentPokemon.type[0]],
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  colorTypeMap[widget.currentPokemon.type[0]][700],
+                  colorTypeMap[widget.currentPokemon.type[0]][100]
+                ]
+              )
+            ),
           ),
-
           Positioned(
             height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width/1,
+            width: MediaQuery.of(context).size.width / 1,
 //            left: MediaQuery.of(context).size.width,
             top: MediaQuery.of(context).size.height / 15,
 
@@ -63,17 +71,32 @@ class _PokeInfoState extends State<PokeInfo> {
                       "Pokedex No. " + widget.currentPokemon.num,
                       style: TextStyle(fontWeight: FontWeight.w100),
                     ),
-                    currentPokemonSpecies == null ? Text("The pokemon")
+                    currentPokemonSpecies == null
+                        ? Text("The pokemon")
                         : Text("The " + currentPokemonSpecies.genera[2].genus),
-                    Text(currentPokemonSpecies.flavorTextEntries[1].flavorText, textAlign: TextAlign.center,),
+                    currentPokemonSpecies.flavorTextEntries[1].language.name == 'en'?
+                    Text(
+                      currentPokemonSpecies.flavorTextEntries[1].flavorText
+                          .replaceAll("\n", " "),
+                      textAlign: TextAlign.center,
+                    ):Text(
+                      currentPokemonSpecies.flavorTextEntries[2].flavorText
+                          .replaceAll("\n", " "),
+                      textAlign: TextAlign.center,
+                    )
+                    ,
                     Text("Abilities: "),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: currentPokeApiData.abilities
                           .map((t) => FilterChip(
-                          backgroundColor: colorAbilitiesMap[t.isHidden],
-                          label: Text(t.ability.name.toString()),
-                          onSelected: (b) {}))
+                              backgroundColor: colorAbilitiesMap[t.isHidden],
+                              label: Text(
+                                t.ability.name.toString().toUpperCase(),
+                                style:
+                                    new TextStyle(fontWeight: FontWeight.w300),
+                              ),
+                              onSelected: (b) {}))
                           .toList(),
                     ),
 
@@ -109,6 +132,46 @@ class _PokeInfoState extends State<PokeInfo> {
                       ),
                     ),
                   ))),
+          currentPokemonSpecies.evolvesFromSpecies != null
+              ? Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                      height: 75,
+                      width: 75,
+                      child: Card(
+                        elevation: 5,
+                        shape: CircleBorder(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "https://randompokemon.com/sprites/normal/" +
+                                          (widget.currentPokemon.id - 1)
+                                              .toString() +
+                                          ".gif"))),
+                        ),
+                      )))
+              : Container(),
+          widget.currentPokemon.nextEvolution != null
+              ? Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                      height: 75,
+                      width: 75,
+                      child: Card(
+                        elevation: 5,
+                        shape: CircleBorder(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "https://randompokemon.com/sprites/normal/" +
+                                          (widget.currentPokemon.id + 1)
+                                              .toString() +
+                                          ".gif"))),
+                        ),
+                      )))
+              : Container(),
         ],
       );
 
@@ -133,10 +196,7 @@ class _PokeInfoState extends State<PokeInfo> {
       'Dragon': Colors.purple,
       'Fairy': Colors.pink
     };
-    colorAbilitiesMap = {
-      true: Colors.pink,
-      false: null
-    };
+    colorAbilitiesMap = {true: Colors.pink, false: null};
     var url = 'https://pokeapi.co/api/v2/pokemon/' +
         widget.currentPokemon.id.toString() +
         "/";
@@ -161,15 +221,27 @@ class _PokeInfoState extends State<PokeInfo> {
     setState(() {});
   }
 
+  rebuildFrame() async {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    fetchData();
+//    fetchData();
+//  rebuildFrame();
 //    print("The color of this pokemon is " + currentPokemonSpecies.color.name);
 //    while(species == null) {}
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorTypeMap[widget.currentPokemon.type[0]],
+        backgroundColor: colorTypeMap[widget.currentPokemon.type[0]][700],
         centerTitle: true,
         elevation: 0.0,
         title: Text(
@@ -182,14 +254,11 @@ class _PokeInfoState extends State<PokeInfo> {
 //                image: DecorationImage(
 //                    image: AssetImage("assets/images/bg.gif"),
 //                    fit: BoxFit.cover))));
-      body:
-      currentPokemonSpecies == null?
-      Center(
-        child: CircularProgressIndicator(
-          //TODO: This will go on forever unless you do a quick reload in Android Studio in which case it will show the pokemon
-        ),
-      ):
-          mainBody(context),
+      body: currentPokemonSpecies == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : mainBody(context),
     );
   }
 }
