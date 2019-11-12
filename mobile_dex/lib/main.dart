@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 
 import 'Camera.dart';
 import 'pokemon.dart';
@@ -47,6 +48,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return Scaffold(
       appBar: AppBar(
         title: Text('National Pokédex'),
