@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -42,7 +45,7 @@ class TakePictureScreenState extends State<SnapScreen> {
       appBar:
       AppBar(
         backgroundColor: Colors.red,
-        
+
       ),
       body: FutureBuilder<void>(
         future: initCamController,
@@ -67,9 +70,50 @@ class TakePictureScreenState extends State<SnapScreen> {
                 '${DateTime.now()}.png',
               );
               await cameraController.takePicture(path);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DisplayPictureScreen(imagePath: path),
+                ),
+              );
             } catch (exception) {}
           },
           backgroundColor: Colors.grey),
+    );
+  }
+}
+
+class DisplayPictureScreen extends StatelessWidget {
+  final String imagePath;
+
+  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text('Photo', style: TextStyle(color: Colors.black),
+
+        ),
+        iconTheme: IconThemeData(
+        color: Colors.black, //change your color here
+      ),
+        elevation: 0,
+
+    ),
+    // The image is stored as a file on the device. Use the `Image.file`
+    // constructor with the given path to display the image.
+    body:
+    Container(
+    child: Align(
+    child: Image.file(File(imagePath)),
+    alignment: Alignment.center,
+    )
+    )
     );
   }
 }

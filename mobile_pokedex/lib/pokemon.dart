@@ -55,7 +55,8 @@ class Pokemon {
         this.spawnTime,
         this.multipliers,
         this.weaknesses,
-        this.nextEvolution});
+        this.nextEvolution
+      });
 
   Pokemon.fromJson(Map<String, dynamic> json) {
     id = json['id'];

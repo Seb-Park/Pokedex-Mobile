@@ -1,6 +1,6 @@
 # mobile_pokedex
 
-A Pokedex for your phone.
+A mobile Pokédex for you phone.
 
 ## Getting Started
 

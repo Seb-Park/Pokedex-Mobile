@@ -146,7 +146,7 @@ class _PokeInfoState extends State<PokeInfo> {
                               image: DecorationImage(
                                   image: NetworkImage(
                                       "https://randompokemon.com/sprites/normal/" +
-                                          (widget.currentPokemon.id - 1)
+                                          (widget.currentPokemon.name)
                                               .toString() +
                                           ".gif"))),
                         ),
