@@ -1,6 +1,6 @@
 # mobile_pokedex
 
-A mobile Pokédex for you phone.
+A mobile Pokedex for all 151 Kanto critters.
 
 ## Getting Started
 
