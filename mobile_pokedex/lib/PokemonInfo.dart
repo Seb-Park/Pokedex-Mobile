@@ -30,150 +30,167 @@ class _PokeInfoState extends State<PokeInfo> {
   String species;
 
   mainBody(BuildContext context) => Stack(
-        children: <Widget>[
-          Container(
+    children: <Widget>[
+      Container(
 //            color: colorTypeMap[widget.currentPokemon.type[0]],
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
                   colorTypeMap[widget.currentPokemon.type[0]][700],
                   colorTypeMap[widget.currentPokemon.type[0]][100]
-                ]
-              )
-            ),
-          ),
-          Positioned(
-            height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width / 1,
+                ])),
+      ),
+      Positioned(
+        height: MediaQuery.of(context).size.height / 1.5,
+        width: MediaQuery.of(context).size.width / 1,
 //            left: MediaQuery.of(context).size.width,
-            top: MediaQuery.of(context).size.height / 15,
+        top: MediaQuery.of(context).size.height / 15,
 
 //            decoration: BoxDecoration(
 //                image: DecorationImage(
 //                    image: AssetImage("assets/images/bg.gif"),
 //                    fit: BoxFit.cover)),
-            child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                elevation: 2.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    SizedBox(height: 80),
+        child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)),
+            elevation: 2.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                SizedBox(height: 80),
 //                    Text(
 //                      currentPokemon.name,
 //                      style:
 //                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
 //                    ),
-                    Text(
-                      "Pokedex No. " + widget.currentPokemon.num,
-                      style: TextStyle(fontWeight: FontWeight.w100),
-                    ),
-                    currentPokemonSpecies == null
-                        ? Text("The pokemon")
-                        : Text("The " + currentPokemonSpecies.genera[2].genus),
-                    currentPokemonSpecies.flavorTextEntries[1].language.name == 'en'?
-                    Text(
-                      currentPokemonSpecies.flavorTextEntries[1].flavorText
-                          .replaceAll("\n", " "),
-                      textAlign: TextAlign.center,
-                    ):Text(
-                      currentPokemonSpecies.flavorTextEntries[2].flavorText
-                          .replaceAll("\n", " "),
-                      textAlign: TextAlign.center,
-                    )
-                    ,
-                    Text("Abilities: "),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: currentPokeApiData.abilities
-                          .map((t) => FilterChip(
-                              backgroundColor: colorAbilitiesMap[t.isHidden],
-                              label: Text(
-                                t.ability.name.toString().toUpperCase(),
-                                style:
-                                    new TextStyle(fontWeight: FontWeight.w300),
-                              ),
-                              onSelected: (b) {}))
-                          .toList(),
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: widget.currentPokemon.type
-                          .map((t) => FilterChip(
-                              backgroundColor: colorTypeMap[t],
-                              label: Text(t),
-                              onSelected: (b) {}))
-                          .toList(),
-                    ),
-                  ],
-                )),
-          ),
-          Align(
-              alignment: Alignment.topCenter,
-              child: Hero(
-                  tag: widget.currentPokemon.img,
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    child: Card(
-                      elevation: 5,
-                      shape: CircleBorder(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://randompokemon.com/sprites/normal/" +
-                                        widget.currentPokemon.id.toString() +
-                                        ".gif"))),
+                Text(
+                  "Pokedex No. " + widget.currentPokemon.num,
+                  style: TextStyle(fontWeight: FontWeight.w100),
+                ),
+                currentPokemonSpecies == null
+                    ? Text("The pokemon")
+                    : Text("The " + currentPokemonSpecies.genera[2].genus),
+                currentPokemonSpecies.flavorTextEntries[1].language.name ==
+                    'en'
+                    ? Text(
+                  currentPokemonSpecies
+                      .flavorTextEntries[1].flavorText
+                      .replaceAll("\n", " "),
+                  textAlign: TextAlign.center,
+                )
+                    : Text(
+                  currentPokemonSpecies
+                      .flavorTextEntries[2].flavorText
+                      .replaceAll("\n", " "),
+                  textAlign: TextAlign.center,
+                ),
+                Text("Abilities: "),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: currentPokeApiData.abilities
+                      .map((t) => FilterChip(
+                      backgroundColor: colorAbilitiesMap[t.isHidden],
+                      label: Text(
+                        t.ability.name.toString().toUpperCase(),
+                        style:
+                        new TextStyle(fontWeight: FontWeight.w300),
                       ),
-                    ),
-                  ))),
-          currentPokemonSpecies.evolvesFromSpecies != null
-              ? Align(
-                  alignment: Alignment.topLeft,
+                      onSelected: (b) {}))
+                      .toList(),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: widget.currentPokemon.type
+                      .map((t) => FilterChip(
+                      backgroundColor: colorTypeMap[t],
+                      label: Text(t),
+                      onSelected: (b) {}))
+                      .toList(),
+                ),
+              ],
+            )),
+      ),
+      Align(
+          alignment: Alignment.topCenter,
+          child: Hero(
+              tag: widget.currentPokemon.img,
+              child: Container(
+                height: 100,
+                width: 100,
+                child: Card(
+                  elevation: 5,
+                  shape: CircleBorder(),
                   child: Container(
-                      height: 75,
-                      width: 75,
-                      child: Card(
-                        elevation: 5,
-                        shape: CircleBorder(),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://randompokemon.com/sprites/normal/" +
-                                          (widget.currentPokemon.name)
-                                              .toString() +
-                                          ".gif"))),
-                        ),
-                      )))
-              : Container(),
-          widget.currentPokemon.nextEvolution != null
-              ? Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                      height: 75,
-                      width: 75,
-                      child: Card(
-                        elevation: 5,
-                        shape: CircleBorder(),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://randompokemon.com/sprites/normal/" +
-                                          (widget.currentPokemon.id + 1)
-                                              .toString() +
-                                          ".gif"))),
-                        ),
-                      )))
-              : Container(),
-        ],
-      );
+                    width: 1000,
+                    height: 1000,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+//                              fit: BoxFit.contain,
+                            image: NetworkImage(
+                                "https://randompokemon.com/sprites/normal/" +
+                                    widget.currentPokemon.id.toString() +
+                                    ".gif"))),
+                  ),
+                ),
+              ))),
+      currentPokemonSpecies.evolvesFromSpecies != null
+          ? Positioned(
+          top: 20.0,
+          left: -2.0,
+//                child: Align(
+//                    alignment: Alignment.topLeft,
+          child: Container(
+              height: 60,
+              width: 60,
+              child: Card(
+                elevation: 5,
+                shape: CircleBorder(),
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "https://randompokemon.com/sprites/normal/" +
+//                                          (int.fromEnvironment(((currentPokemonSpecies.evolvesFromSpecies.url).split("/"))[6]))
+//                                              .toString()+
+                                  (((currentPokemonSpecies
+                                      .evolvesFromSpecies.url)
+                                      .split("/"))[6]) +
+                                  ".gif"))),
+                ),
+              ))
+//                ),
+      )
+          : Container(),
+      widget.currentPokemon.nextEvolution != null
+          ? Positioned(
+          top: 20.0,
+          right: -2.0,
+//                child: Align(
+//                    alignment: Alignment.bottomRight,
+          child: Container(
+              height: 60,
+              width: 60,
+              child: Card(
+                elevation: 5,
+                shape: CircleBorder(),
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "https://randompokemon.com/sprites/normal/" +
+                                  (widget.currentPokemon.id + 1)
+                                      .toString() +
+                                  ".gif"))),
+                ),
+              ))
+//                ),
+      )
+          : Container(),
+    ],
+  );
 
   fetchData() async {
     colorTypeMap = {
@@ -256,8 +273,8 @@ class _PokeInfoState extends State<PokeInfo> {
 //                    fit: BoxFit.cover))));
       body: currentPokemonSpecies == null
           ? Center(
-              child: CircularProgressIndicator(),
-            )
+        child: Image(image: AssetImage('assets/pokeLoading.gif')),
+      )
           : mainBody(context),
     );
   }

@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: hub == null
           ? Center(
-        child: CircularProgressIndicator(),
+        child: Image(image: AssetImage('assets/pokeLoading.gif')),
       )
           : GridView.count(
         crossAxisCount: 3,
