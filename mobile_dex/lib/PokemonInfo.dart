@@ -257,7 +257,7 @@ class _PokeInfoState extends State<PokeInfo> {
 //                    fit: BoxFit.cover))));
       body: currentPokemonSpecies == null
           ? Center(
-              child: CircularProgressIndicator(),
+              child: Image(image: AssetImage('assets/pokeLoading.gif')),
             )
           : mainBody(context),
     );
