@@ -34,15 +34,13 @@ class _PokeInfoState extends State<PokeInfo> {
           Container(
 //            color: colorTypeMap[widget.currentPokemon.type[0]],
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
                   colorTypeMap[widget.currentPokemon.type[0]][700],
                   colorTypeMap[widget.currentPokemon.type[0]][100]
-                ]
-              )
-            ),
+                ])),
           ),
           Positioned(
             height: MediaQuery.of(context).size.height / 1.5,
@@ -74,17 +72,20 @@ class _PokeInfoState extends State<PokeInfo> {
                     currentPokemonSpecies == null
                         ? Text("The pokemon")
                         : Text("The " + currentPokemonSpecies.genera[2].genus),
-                    currentPokemonSpecies.flavorTextEntries[1].language.name == 'en'?
-                    Text(
-                      currentPokemonSpecies.flavorTextEntries[1].flavorText
-                          .replaceAll("\n", " "),
-                      textAlign: TextAlign.center,
-                    ):Text(
-                      currentPokemonSpecies.flavorTextEntries[2].flavorText
-                          .replaceAll("\n", " "),
-                      textAlign: TextAlign.center,
-                    )
-                    ,
+                    currentPokemonSpecies.flavorTextEntries[1].language.name ==
+                            'en'
+                        ? Text(
+                            currentPokemonSpecies
+                                .flavorTextEntries[1].flavorText
+                                .replaceAll("\n", " "),
+                            textAlign: TextAlign.center,
+                          )
+                        : Text(
+                            currentPokemonSpecies
+                                .flavorTextEntries[2].flavorText
+                                .replaceAll("\n", " "),
+                            textAlign: TextAlign.center,
+                          ),
                     Text("Abilities: "),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -117,14 +118,17 @@ class _PokeInfoState extends State<PokeInfo> {
               child: Hero(
                   tag: widget.currentPokemon.img,
                   child: Container(
-                    height: 150,
-                    width: 150,
+                    height: 100,
+                    width: 100,
                     child: Card(
                       elevation: 5,
                       shape: CircleBorder(),
                       child: Container(
+                        width: 1000,
+                        height: 1000,
                         decoration: BoxDecoration(
                             image: DecorationImage(
+//                              fit: BoxFit.contain,
                                 image: NetworkImage(
                                     "https://randompokemon.com/sprites/normal/" +
                                         widget.currentPokemon.id.toString() +
@@ -133,11 +137,14 @@ class _PokeInfoState extends State<PokeInfo> {
                     ),
                   ))),
           currentPokemonSpecies.evolvesFromSpecies != null
-              ? Align(
-                  alignment: Alignment.topLeft,
+              ? Positioned(
+                  top: 20.0,
+                  left: -2.0,
+//                child: Align(
+//                    alignment: Alignment.topLeft,
                   child: Container(
-                      height: 75,
-                      width: 75,
+                      height: 60,
+                      width: 60,
                       child: Card(
                         elevation: 5,
                         shape: CircleBorder(),
@@ -148,17 +155,24 @@ class _PokeInfoState extends State<PokeInfo> {
                                       "https://randompokemon.com/sprites/normal/" +
 //                                          (int.fromEnvironment(((currentPokemonSpecies.evolvesFromSpecies.url).split("/"))[6]))
 //                                              .toString()+
-                                          (((currentPokemonSpecies.evolvesFromSpecies.url).split("/"))[6])+
+                                          (((currentPokemonSpecies
+                                                  .evolvesFromSpecies.url)
+                                              .split("/"))[6]) +
                                           ".gif"))),
                         ),
-                      )))
+                      ))
+//                ),
+                  )
               : Container(),
           widget.currentPokemon.nextEvolution != null
-              ? Align(
-                  alignment: Alignment.topRight,
+              ? Positioned(
+                  top: 20.0,
+                  right: -2.0,
+//                child: Align(
+//                    alignment: Alignment.bottomRight,
                   child: Container(
-                      height: 75,
-                      width: 75,
+                      height: 60,
+                      width: 60,
                       child: Card(
                         elevation: 5,
                         shape: CircleBorder(),
@@ -171,7 +185,9 @@ class _PokeInfoState extends State<PokeInfo> {
                                               .toString() +
                                           ".gif"))),
                         ),
-                      )))
+                      ))
+//                ),
+                  )
               : Container(),
         ],
       );
