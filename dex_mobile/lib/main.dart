@@ -12,11 +12,11 @@ import 'package:vibration/vibration.dart';
 import 'PokemonInfo.dart';
 
 void main() => runApp(MaterialApp(
-      title: 'Pokédex',
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-    ));
+  title: 'Pokédex',
+  home: HomePage(),
+  debugShowCheckedModeBanner: false,
+  theme: ThemeData.light(),
+));
 
 class HomePage extends StatefulWidget {
   @override
@@ -60,72 +60,72 @@ class _HomePageState extends State<HomePage> {
       ),
       body: hub == null
           ? Center(
-              child: Image(image: AssetImage('assets/pokeLoading.gif')),
-            )
+        child: Image(image: AssetImage('assets/pokeLoading.gif')),
+      )
           : GridView.count(
-              crossAxisCount: 3,
-              children: hub.pokemon
-                  .map((poke) => Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PokeInfo(
-                                          currentPokemon: poke,
-                                        )));
-                          },
-                          splashColor: Colors.white,
-                          child: Hero(
-                              tag: poke.img,
-                              child: Container(
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
+        crossAxisCount: 3,
+        children: hub.pokemon
+            .map((poke) => Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PokeInfo(
+                        currentPokemon: poke,
+                      )));
+            },
+            splashColor: Colors.white,
+            child: Hero(
+                tag: poke.img,
+                child: Container(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
 //                            shape: CircleBorder(),
-                                  elevation: 2.0,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      Container(
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PokeInfo(
-                                                          currentPokemon: poke,
-                                                        )));
-                                          },
-                                          splashColor: Colors.cyan,
-                                        ),
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
+                    elevation: 2.0,
+                    child: Column(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PokeInfo(
+                                            currentPokemon: poke,
+                                          )));
+                            },
+                            splashColor: Colors.cyan,
+                          ),
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
 //                                        alignment: Alignment.topCenter,
-                                                        image: NetworkImage(
-                                                            poke.img)) ==
-                                                    null
-                                                ? DecorationImage(
-                                                    image: NetworkImage(
-                                                        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"))
-                                                : DecorationImage(
-                                                    image: NetworkImage(
-                                                        poke.img))),
-                                      ),
-//                              Text(poke.name,style: TextStyle(fontFamily: ''))
-                                    ],
-                                  ),
-                                ),
-                              )),
+                                  image: NetworkImage(
+                                      poke.img)) ==
+                                  null
+                                  ? DecorationImage(
+                                  image: NetworkImage(
+                                      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"))
+                                  : DecorationImage(
+                                  image: NetworkImage(
+                                      poke.img))),
                         ),
-                      ))
-                  .toList(),
-            ),
+//                              Text(poke.name,style: TextStyle(fontFamily: ''))
+                      ],
+                    ),
+                  ),
+                )),
+          ),
+        ))
+            .toList(),
+      ),
       drawer: Drawer(
         child: ListView(
           children: <Widget>[

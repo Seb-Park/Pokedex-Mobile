@@ -1,6 +1,6 @@
 # dex_mobile
 
-Mobile Pokédex with 151 original Kanto critters
+A Mobile Pokédex that contains info on the 151 originals.
 
 ## Getting Started
 

@@ -94,26 +94,26 @@ class DisplayPictureScreen extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Photo', style: TextStyle(color: Colors.black),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text('Photo', style: TextStyle(color: Colors.black),
+
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          ),
+          elevation: 0,
 
         ),
-        iconTheme: IconThemeData(
-        color: Colors.black, //change your color here
-      ),
-        elevation: 0,
-
-    ),
-    // The image is stored as a file on the device. Use the `Image.file`
-    // constructor with the given path to display the image.
-    body:
-    Container(
-    child: Align(
-    child: Image.file(File(imagePath)),
-    alignment: Alignment.center,
-    )
-    )
+        // The image is stored as a file on the device. Use the `Image.file`
+        // constructor with the given path to display the image.
+        body:
+        Container(
+            child: Align(
+              child: Image.file(File(imagePath)),
+              alignment: Alignment.center,
+            )
+        )
     );
   }
 }
