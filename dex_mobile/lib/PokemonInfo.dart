@@ -303,8 +303,8 @@ class _PokeInfoState extends State<PokeInfo> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
-                          widget.currentPokemon.weaknesses.length < 5?
-                          Container(
+                          widget.currentPokemon.weaknesses.length < 5
+                              ? Container(
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -344,6 +344,83 @@ class _PokeInfoState extends State<PokeInfo> {
                                     )
                                   ],
                                 ),
+//                          GridView.count(
+//                              crossAxisCount: 1,
+//                            scrollDirection: Axis.horizontal,
+//                            children: <Widget>[
+//                              Card(
+//                                elevation: 3,
+//                              ),
+//                              Card(
+//                                elevation: 3,
+//                              ),
+//                              Card(
+//                                elevation: 3,
+//                              ),
+//                            ],
+//                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      elevation: 2.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            "Breeding",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          currentPokemonSpecies.genderRate>-1?
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Container(
+                                width: 100,
+                                height: 100,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 10,
+                                  value: currentPokemonSpecies.genderRate/8,
+                                  backgroundColor: Colors.blue,
+                                  valueColor: const AlwaysStoppedAnimation(Colors.red),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text("♂ " + (100-(currentPokemonSpecies.genderRate/8)*100).toString() + "%", style: TextStyle(color: Colors.blue),),
+                                  Text("♀ " + ((currentPokemonSpecies.genderRate/8)*100).toString() + "%", style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
+
+                            ],
+                          ):
+                          Container(
+                            width: 100,
+                            height: 100,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 10,
+                              value: 0,
+                              backgroundColor: Colors.grey,
+                              valueColor: const AlwaysStoppedAnimation(Colors.grey),
+                            ),
+                          ),
+                          Text("Egg Groups"),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: currentPokemonSpecies.eggGroups
+                                .map((t) => FilterChip(
+                                    backgroundColor: Colors.grey,
+                                    label: Text(t.name[0].toUpperCase() + t.name.substring(1)),
+                                    onSelected: (b) {}))
+                                .toList(),
+                          ),
                         ],
                       ),
                     ),
