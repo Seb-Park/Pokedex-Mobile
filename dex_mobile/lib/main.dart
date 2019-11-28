@@ -192,6 +192,7 @@ class _HomePageState extends State<HomePage> {
         },
         backgroundColor: Colors.deepOrange,
         child: Icon(Icons.camera),
+        tooltip: 'Open Camera',
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 //      floatingActionButton:

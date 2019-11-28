@@ -6,6 +6,7 @@ import 'PokeApiDetails.dart';
 import 'pokemon.dart';
 import 'package:http/http.dart' as http;
 import 'PokeSpecies.dart';
+import 'package:vibration/vibration.dart';
 
 class PokeInfo extends StatefulWidget {
   final Pokemon currentPokemon;
@@ -24,6 +25,7 @@ class _PokeInfoState extends State<PokeInfo> {
 
   var theUrl;
   var _attack = 0.1;
+  var favorite = false;
 
   PokemonSpecies currentPokemonSpecies;
   PokeAPIData currentPokeApiData;
@@ -86,7 +88,7 @@ class _PokeInfoState extends State<PokeInfo> {
 //                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
 //                    ),
                             Text(
-                              "Pokedex No. " + widget.currentPokemon.num,
+                              "Pokédex No. " + widget.currentPokemon.num,
                               style: TextStyle(fontWeight: FontWeight.w100),
                             ),
                             currentPokemonSpecies == null
@@ -165,8 +167,13 @@ class _PokeInfoState extends State<PokeInfo> {
                                 SizedBox(
                                   width: 10,
                                 ),
+                                Text(currentPokeApiData.stats[4].baseStat
+                                    .toString()),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Container(
-                                    width: 200,
+                                    width: 190,
                                     height: 10,
                                     child: LinearProgressIndicator(
 //                                  valueColor: Colors.blue,
@@ -190,8 +197,13 @@ class _PokeInfoState extends State<PokeInfo> {
                                 SizedBox(
                                   width: 10,
                                 ),
+                                Text(currentPokeApiData.stats[3].baseStat
+                                    .toString()),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Container(
-                                    width: 200,
+                                    width: 190,
                                     height: 10,
                                     child: LinearProgressIndicator(
                                       value:
@@ -215,8 +227,13 @@ class _PokeInfoState extends State<PokeInfo> {
                                 SizedBox(
                                   width: 10,
                                 ),
+                                Text(currentPokeApiData.stats[2].baseStat
+                                    .toString()),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Container(
-                                    width: 200,
+                                    width: 190,
                                     height: 10,
                                     child: LinearProgressIndicator(
                                       value:
@@ -240,8 +257,13 @@ class _PokeInfoState extends State<PokeInfo> {
                                 SizedBox(
                                   width: 10,
                                 ),
+                                Text(currentPokeApiData.stats[1].baseStat
+                                    .toString()),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Container(
-                                    width: 200,
+                                    width: 190,
                                     height: 10,
                                     child: LinearProgressIndicator(
                                       value:
@@ -266,8 +288,13 @@ class _PokeInfoState extends State<PokeInfo> {
                                 SizedBox(
                                   width: 10,
                                 ),
+                                Text(currentPokeApiData.stats[0].baseStat
+                                    .toString()),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Container(
-                                    width: 200,
+                                    width: 190,
                                     height: 10,
                                     child: LinearProgressIndicator(
                                       value:
@@ -377,47 +404,73 @@ class _PokeInfoState extends State<PokeInfo> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
-                          currentPokemonSpecies.genderRate>-1?
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Container(
-                                width: 100,
-                                height: 100,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 10,
-                                  value: currentPokemonSpecies.genderRate/8,
-                                  backgroundColor: Colors.blue,
-                                  valueColor: const AlwaysStoppedAnimation(Colors.red),
+                          currentPokemonSpecies.genderRate > -1
+                              ? Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Container(
+                                      width: 100,
+                                      height: 100,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 10,
+                                        value:
+                                            currentPokemonSpecies.genderRate /
+                                                8,
+                                        backgroundColor: Colors.blue,
+                                        valueColor:
+                                            const AlwaysStoppedAnimation(
+                                                Colors.red),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Text(
+                                          "♂ " +
+                                              (100 -
+                                                      (currentPokemonSpecies
+                                                                  .genderRate /
+                                                              8) *
+                                                          100)
+                                                  .toString() +
+                                              "%",
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        Text(
+                                          "♀ " +
+                                              ((currentPokemonSpecies
+                                                              .genderRate /
+                                                          8) *
+                                                      100)
+                                                  .toString() +
+                                              "%",
+                                          style: TextStyle(color: Colors.red),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : Container(
+                                  width: 100,
+                                  height: 100,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 10,
+                                    value: 0,
+                                    backgroundColor: Colors.grey,
+                                    valueColor: const AlwaysStoppedAnimation(
+                                        Colors.grey),
+                                  ),
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Text("♂ " + (100-(currentPokemonSpecies.genderRate/8)*100).toString() + "%", style: TextStyle(color: Colors.blue),),
-                                  Text("♀ " + ((currentPokemonSpecies.genderRate/8)*100).toString() + "%", style: TextStyle(color: Colors.red),)
-                                ],
-                              ),
-
-                            ],
-                          ):
-                          Container(
-                            width: 100,
-                            height: 100,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 10,
-                              value: 0,
-                              backgroundColor: Colors.grey,
-                              valueColor: const AlwaysStoppedAnimation(Colors.grey),
-                            ),
-                          ),
                           Text("Egg Groups"),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: currentPokemonSpecies.eggGroups
                                 .map((t) => FilterChip(
                                     backgroundColor: Colors.grey,
-                                    label: Text(t.name[0].toUpperCase() + t.name.substring(1)),
+                                    label: Text(t.name[0].toUpperCase() +
+                                        t.name.substring(1)),
                                     onSelected: (b) {}))
                                 .toList(),
                           ),
@@ -624,15 +677,19 @@ class _PokeInfoState extends State<PokeInfo> {
 //    print("The color of this pokemon is " + currentPokemonSpecies.color.name);
 //    while(species == null) {}
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorTypeMap[widget.currentPokemon.type[0]][700],
-        centerTitle: true,
-        elevation: 0.0,
-        title: Text(
-          widget.currentPokemon.name,
-          textAlign: TextAlign.center,
-        ),
-      ),
+      appBar: currentPokemonSpecies == null
+          ? AppBar(
+              backgroundColor: colorTypeMap[widget.currentPokemon.type[0]][700],
+            )
+          : AppBar(
+              backgroundColor: colorTypeMap[widget.currentPokemon.type[0]][700],
+              centerTitle: true,
+              elevation: 0.0,
+              title: Text(
+                currentPokemonSpecies.names[2].name,
+                textAlign: TextAlign.center,
+              ),
+            ),
 //        body: Container(
 //            decoration: BoxDecoration(
 //                image: DecorationImage(
@@ -644,6 +701,26 @@ class _PokeInfoState extends State<PokeInfo> {
 //              child: CircularProgressIndicator(),
             )
           : mainBody(context),
+      floatingActionButton: FloatingActionButton(
+        child: !favorite
+            ? Icon(
+                Icons.favorite_border,
+              )
+            : Icon(
+                Icons.favorite,
+              ),
+        onPressed: () async {
+          favorite = !favorite;
+          print('pressed! Favorite is ' + favorite.toString());
+          if (Vibration.hasVibrator() != null) {
+            Vibration.vibrate(duration: 30);
+            print(Vibration.hasVibrator());
+          }
+          setState(() {});
+        },
+        backgroundColor: Colors.pink,
+        tooltip: "Favorite",
+      ),
     );
   }
 }
