@@ -173,7 +173,10 @@ class _PokeInfoState extends State<PokeInfo> {
                                       value:
                                           currentPokeApiData.stats[4].baseStat /
                                               200,
-//                                  backgroundColor: Colors.transparent,
+                                      valueColor: const AlwaysStoppedAnimation(
+                                          Colors.redAccent),
+                                      backgroundColor:
+                                          (Colors.red).withOpacity(0.1),
                                     )),
                                 SizedBox(
                                   width: 20,
@@ -194,6 +197,10 @@ class _PokeInfoState extends State<PokeInfo> {
                                       value:
                                           currentPokeApiData.stats[3].baseStat /
                                               200,
+                                      valueColor: const AlwaysStoppedAnimation(
+                                          Colors.blue),
+                                      backgroundColor:
+                                          (Colors.blue).withOpacity(0.1),
 //                                  backgroundColor: Colors.transparent,
                                     )),
                                 SizedBox(
@@ -215,6 +222,10 @@ class _PokeInfoState extends State<PokeInfo> {
                                       value:
                                           currentPokeApiData.stats[2].baseStat /
                                               200,
+                                      valueColor: const AlwaysStoppedAnimation(
+                                          Colors.pinkAccent),
+                                      backgroundColor:
+                                          (Colors.pink).withOpacity(0.1),
 //                                  backgroundColor: Colors.transparent,
                                     )),
                                 SizedBox(
@@ -236,6 +247,10 @@ class _PokeInfoState extends State<PokeInfo> {
                                       value:
                                           currentPokeApiData.stats[1].baseStat /
                                               200,
+                                      valueColor: const AlwaysStoppedAnimation(
+                                          Colors.cyanAccent),
+                                      backgroundColor:
+                                          (Colors.cyan).withOpacity(0.1),
 //                                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
 //                                  backgroundColor: Colors.transparent,
                                     )),
@@ -258,6 +273,10 @@ class _PokeInfoState extends State<PokeInfo> {
                                       value:
                                           currentPokeApiData.stats[0].baseStat /
                                               200,
+                                      valueColor: const AlwaysStoppedAnimation(
+                                          Colors.greenAccent),
+                                      backgroundColor:
+                                          (Colors.green).withOpacity(0.1),
 //                                  backgroundColor: Colors.transparent,
                                     )),
                                 SizedBox(
@@ -277,6 +296,56 @@ class _PokeInfoState extends State<PokeInfo> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
                       elevation: 2.0,
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            "Weaknesses",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          widget.currentPokemon.weaknesses.length < 5?
+                          Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: widget.currentPokemon.weaknesses
+                                        .map((t) => FilterChip(
+                                            backgroundColor: colorTypeMap[t],
+                                            label: Text(t),
+                                            onSelected: (b) {}))
+                                        .toList(),
+                                  ),
+                                )
+                              : Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: (widget
+                                              .currentPokemon.weaknesses
+                                              .sublist(0, 3))
+                                          .map((t) => FilterChip(
+                                              backgroundColor: colorTypeMap[t],
+                                              label: Text(t),
+                                              onSelected: (b) {}))
+                                          .toList(),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: (widget
+                                          .currentPokemon.weaknesses
+                                          .sublist(3)
+                                          .map((t) => FilterChip(
+                                              backgroundColor: colorTypeMap[t],
+                                              label: Text(t),
+                                              onSelected: (b) {}))
+                                          .toList()),
+                                    )
+                                  ],
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -380,19 +449,35 @@ class _PokeInfoState extends State<PokeInfo> {
           Align(
               alignment: Alignment.bottomCenter,
               child: Container(
+                child: Align(
+                  alignment: Alignment(0, 0.5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Icon(
+                        Icons.keyboard_arrow_up,
+                        color: Colors.white,
+                      ),
+//                      Text("Swipe up for more",
+//                          style: TextStyle(color: Colors.white)),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
                 height: 120,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment(0,0),
+                        begin: Alignment(0, 0),
 //                        begin: Alignment.topCenter,
-                        end: Alignment(0,0.6),
+                        end: Alignment(0, 0.8),
                         colors: [
                       colorTypeMap[widget.currentPokemon.type[0]][700]
                           .withOpacity(0.0),
                       colorTypeMap[widget.currentPokemon.type[0]][700]
                           .withOpacity(1.0),
-                    ])
-                ),
+                    ])),
               )),
         ],
       );

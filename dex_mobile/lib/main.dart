@@ -130,12 +130,16 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: <Widget>[
             DrawerHeader(
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Kanto Pokédex',
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
               ),
               decoration: BoxDecoration(color: Colors.redAccent),
             ),
