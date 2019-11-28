@@ -67,7 +67,8 @@ class TakePictureScreenState extends State<SnapScreen> {
               await initCamController;
               final path = join(
                 (await getTemporaryDirectory()).path,
-                '${DateTime.now()}.png',
+//                '${DateTime.now()}.png',
+              "mostRecentCapture.png",
               );
               await cameraController.takePicture(path);
               Navigator.push(
