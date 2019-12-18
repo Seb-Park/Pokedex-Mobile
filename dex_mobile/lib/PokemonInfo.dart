@@ -24,7 +24,7 @@ class _PokeInfoState extends State<PokeInfo> {
   ScrollController _scrollController = new ScrollController();
 
   var theUrl;
-  var _attack = 0.1;
+//  var _attack = 0.1;
   var favorite = false;
 
   PokemonSpecies currentPokemonSpecies;
