@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
 
 class SnapScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -67,8 +68,8 @@ class TakePictureScreenState extends State<SnapScreen> {
               await initCamController;
               final path = join(
                 (await getTemporaryDirectory()).path,
-//                '${DateTime.now()}.png',
-              "mostRecentCapture.png",
+                '${DateTime.now()}.png',
+//              "mostRecentCapture.png",
               );
               await cameraController.takePicture(path);
               Navigator.push(
@@ -84,10 +85,16 @@ class TakePictureScreenState extends State<SnapScreen> {
   }
 }
 
+
 class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
+  /*static*/ final String imagePath;
+
+//  static File imageFile = new File(imagePath);
+//  static List<int> imageBytes = imageFile.readAsBytesSync();
+//  final String base64Image = base64.encode(imageBytes);
 
   const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
