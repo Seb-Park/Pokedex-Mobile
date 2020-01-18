@@ -101,7 +101,7 @@ class DisplayPictureScreen extends StatelessWidget {
     File imageFile = new File(this.imagePath);
     List<int> imageBytes = imageFile.readAsBytesSync();
     String base64Image = base64.encode(imageBytes);
-    printWrapped("{" + base64Image + "} Not shortened");
+//    printWrapped("{" + base64Image + "} Not shortened");
     return base64Image.length.toString();
   }
 

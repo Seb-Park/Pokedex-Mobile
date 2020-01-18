@@ -17,7 +17,7 @@ void main() => runApp(MaterialApp(
       title: 'Pokédex',
       home: HomePage(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
+      theme: ThemeData.dark(),
     ));
 
 class HomePage extends StatefulWidget {
@@ -83,15 +83,15 @@ class _HomePageState extends State<HomePage> {
                               tag: poke.img,
                               child: Container(
                                 child: Card(
-                                  color: Colors.white,
+                                  color: Colors.grey[800],
                                   shape: SuperellipseShape(
                                     borderRadius: BorderRadius.circular(28),
                                   ),
 //                                  shape: RoundedRectangleBorder(
 //                                      borderRadius: BorderRadius.circular(5)),
 //                            shape: CircleBorder(),
-                                  //elevation: 2.0,
-                                  elevation: 0,
+                                  elevation: 2.0,
+//                                  elevation: 0,
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                       )));
         },
         backgroundColor: Colors.deepOrange,
-        child: Icon(Icons.camera),
+        child: Icon(Icons.camera, color: Colors.white,),
         tooltip: 'Open Camera',
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

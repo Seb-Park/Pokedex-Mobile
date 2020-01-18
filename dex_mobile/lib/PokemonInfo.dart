@@ -24,6 +24,7 @@ class _PokeInfoState extends State<PokeInfo> {
   ScrollController _scrollController = new ScrollController();
 
   var theUrl;
+
 //  var _attack = 0.1;
   var favorite = false;
 
@@ -705,9 +706,11 @@ class _PokeInfoState extends State<PokeInfo> {
         child: !favorite
             ? Icon(
                 Icons.favorite_border,
+                color: Colors.white,
               )
             : Icon(
                 Icons.favorite,
+                color: Colors.white,
               ),
         onPressed: () async {
           favorite = !favorite;
