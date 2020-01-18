@@ -7,6 +7,8 @@ import 'pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:superellipse_shape/superellipse_shape.dart';
+
 import 'package:vibration/vibration.dart';
 
 import 'PokemonInfo.dart';
@@ -81,10 +83,15 @@ class _HomePageState extends State<HomePage> {
                               tag: poke.img,
                               child: Container(
                                 child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
+                                  color: Colors.white,
+                                  shape: SuperellipseShape(
+                                    borderRadius: BorderRadius.circular(28),
+                                  ),
+//                                  shape: RoundedRectangleBorder(
+//                                      borderRadius: BorderRadius.circular(5)),
 //                            shape: CircleBorder(),
-                                  elevation: 2.0,
+                                  //elevation: 2.0,
+                                  elevation: 0,
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,

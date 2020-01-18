@@ -77,7 +77,7 @@ class _PokeInfoState extends State<PokeInfo> {
                     child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
-                        elevation: 2.0,
+                        elevation: 4.0,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -145,7 +145,7 @@ class _PokeInfoState extends State<PokeInfo> {
                     child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
-                        elevation: 2.0,
+                        elevation: 4.0,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
@@ -322,7 +322,7 @@ class _PokeInfoState extends State<PokeInfo> {
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
-                      elevation: 2.0,
+                      elevation: 4.0,
                       child: Column(
                         children: <Widget>[
                           Text(
@@ -395,7 +395,7 @@ class _PokeInfoState extends State<PokeInfo> {
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
-                      elevation: 2.0,
+                      elevation: 4.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
