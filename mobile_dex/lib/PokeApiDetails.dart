@@ -14,6 +14,7 @@ class PokeAPIData {
   NameAndURL species;
   Sprites sprites;
   List<Stats> stats;
+  int totalBaseStat;
   List<Types> types;
   int weight;
 
@@ -33,6 +34,7 @@ class PokeAPIData {
         this.species,
         this.sprites,
         this.stats,
+        this.totalBaseStat,
         this.types,
         this.weight});
 
@@ -84,6 +86,10 @@ class PokeAPIData {
         stats.add(new Stats.fromJson(v));
       });
     }
+    totalBaseStat = 0;
+    stats.forEach((f) {
+      totalBaseStat+=f.baseStat;
+    });
     if (json['types'] != null) {
       types = new List<Types>();
       json['types'].forEach((v) {

@@ -7,16 +7,18 @@ import 'pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:superellipse_shape/superellipse_shape.dart';
+
 import 'package:vibration/vibration.dart';
 
 import 'PokemonInfo.dart';
 
 void main() => runApp(MaterialApp(
-      title: 'Pokédex',
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-    ));
+  title: 'Pokédex',
+  home: HomePage(),
+  debugShowCheckedModeBanner: false,
+  theme: ThemeData.dark(),
+));
 
 class HomePage extends StatefulWidget {
   @override
@@ -53,85 +55,100 @@ class _HomePageState extends State<HomePage> {
     ]);
     return Scaffold(
       appBar: AppBar(
-        title: Text('National Pokédex'),
+        title: Text('Kanto Pokédex'),
         centerTitle: true,
         backgroundColor: Colors.redAccent,
         elevation: 3,
       ),
       body: hub == null
           ? Center(
-              child: Image(image: AssetImage('assets/pokeLoading.gif')),
-            )
+        child: Image(image: AssetImage('assets/pokeLoading.gif')),
+      )
           : GridView.count(
-              crossAxisCount: 3,
-              children: hub.pokemon
-                  .map((poke) => Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PokeInfo(
-                                          currentPokemon: poke,
-                                        )));
-                          },
-                          splashColor: Colors.white,
-                          child: Hero(
-                              tag: poke.img,
-                              child: Container(
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
+        crossAxisCount: 3,
+        children: hub.pokemon
+            .map((poke) => Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PokeInfo(
+                        currentPokemon: poke,
+                      )));
+            },
+            splashColor: Colors.white,
+            child: Hero(
+                tag: poke.img,
+                child: Container(
+                  child: Card(
+                    color: Colors.grey[800],
+                    shape: SuperellipseShape(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+//                                  shape: RoundedRectangleBorder(
+//                                      borderRadius: BorderRadius.circular(5)),
 //                            shape: CircleBorder(),
-                                  elevation: 2.0,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      Container(
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PokeInfo(
-                                                          currentPokemon: poke,
-                                                        )));
-                                          },
-                                          splashColor: Colors.cyan,
-                                        ),
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
+                    elevation: 2.0,
+//                                  elevation: 0,
+                    child: Column(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PokeInfo(
+                                            currentPokemon: poke,
+                                          )));
+                            },
+                            splashColor: Colors.cyan,
+                          ),
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
 //                                        alignment: Alignment.topCenter,
-                                                        image: NetworkImage(
-                                                            poke.img)) ==
-                                                    null
-                                                ? DecorationImage(
-                                                    image: NetworkImage(
-                                                        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"))
-                                                : DecorationImage(
-                                                    image: NetworkImage(
-                                                        poke.img))),
-                                      ),
-//                              Text(poke.name,style: TextStyle(fontFamily: ''))
-                                    ],
-                                  ),
-                                ),
-                              )),
+                                  image: NetworkImage(
+                                      poke.img)) ==
+                                  null
+                                  ? DecorationImage(
+                                  image: NetworkImage(
+                                      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"))
+                                  : DecorationImage(
+                                  image: NetworkImage(
+                                      poke.img))),
                         ),
-                      ))
-                  .toList(),
-            ),
+//                              Text(poke.name,style: TextStyle(fontFamily: ''))
+                      ],
+                    ),
+                  ),
+                )),
+          ),
+        ))
+            .toList(),
+      ),
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
             DrawerHeader(
-              child: Text('Menu'),
-              decoration: BoxDecoration(color: Colors.pink),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Kanto Pokédex',
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(color: Colors.redAccent),
             ),
             ListTile(
               title: Text("Recents"),
@@ -142,6 +159,20 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               title: Text("Camera"),
+              onTap: () async {
+                final cameras = await availableCameras();
+                final firstCamera = cameras.first;
+                if (Vibration.hasVibrator() != null) {
+                  Vibration.vibrate(duration: 50);
+                  print(Vibration.hasVibrator());
+                }
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SnapScreen(
+                          camera: firstCamera,
+                        )));
+              },
             ),
             ListTile(
               title: Text("Pokedex"),
@@ -153,7 +184,6 @@ class _HomePageState extends State<HomePage> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-
           final cameras = await availableCameras();
           final firstCamera = cameras.first;
           if (Vibration.hasVibrator() != null) {
@@ -161,12 +191,15 @@ class _HomePageState extends State<HomePage> {
             print(Vibration.hasVibrator());
           }
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SnapScreen(
-            camera: firstCamera,
-          )));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SnapScreen(
+                    camera: firstCamera,
+                  )));
         },
         backgroundColor: Colors.deepOrange,
-        child: Icon(Icons.camera),
+        child: Icon(Icons.camera, color: Colors.white,),
+        tooltip: 'Open Camera',
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 //      floatingActionButton:

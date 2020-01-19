@@ -1,5 +1,5 @@
 name: mobile_dex
-description: Mobile Pokédex.
+description: A mobile ML pokedex.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -17,13 +17,15 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  http: ^0.12.0
   flutter:
     sdk: flutter
+  http: ^0.12.0
   vibration: 1.2.2
   camera:
   path_provider:
   path:
+  superellipse_shape: ^0.1.5
+  cloudinary_client: ^0.0.9
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -39,8 +41,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  assets:
-    - assets/
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

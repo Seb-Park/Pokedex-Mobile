@@ -27,30 +27,30 @@ class PokemonSpecies {
 
   PokemonSpecies(
       {this.baseHappiness,
-      this.captureRate,
-      this.color,
-      this.eggGroups,
-      this.evolutionChain,
-      this.evolvesFromSpecies,
-      this.flavorTextEntries,
-      this.formDescriptions,
-      this.formsSwitchable,
-      this.genderRate,
-      this.genera,
-      this.generation,
-      this.growthRate,
-      this.habitat,
-      this.hasGenderDifferences,
-      this.hatchCounter,
-      this.id,
-      this.isBaby,
-      this.name,
-      this.names,
-      this.order,
-      this.palParkEncounters,
-      this.pokedexNumbers,
-      this.shape,
-      this.varieties});
+        this.captureRate,
+        this.color,
+        this.eggGroups,
+        this.evolutionChain,
+        this.evolvesFromSpecies,
+        this.flavorTextEntries,
+        this.formDescriptions,
+        this.formsSwitchable,
+        this.genderRate,
+        this.genera,
+        this.generation,
+        this.growthRate,
+        this.habitat,
+        this.hasGenderDifferences,
+        this.hatchCounter,
+        this.id,
+        this.isBaby,
+        this.name,
+        this.names,
+        this.order,
+        this.palParkEncounters,
+        this.pokedexNumbers,
+        this.shape,
+        this.varieties});
 
   PokemonSpecies.fromJson(Map<String, dynamic> json) {
     print('decoding this species');
@@ -96,7 +96,7 @@ class PokemonSpecies {
         ? new NameAndURL.fromJson(json['growth_rate'])
         : null;
     habitat =
-        json['habitat'] != null ? new NameAndURL.fromJson(json['habitat']) : null;
+    json['habitat'] != null ? new NameAndURL.fromJson(json['habitat']) : null;
     hasGenderDifferences = json['has_gender_differences'];
     hatchCounter = json['hatch_counter'];
     id = json['id'];
@@ -241,7 +241,7 @@ class FlavorTextEntries {
         ? new NameAndURL.fromJson(json['language'])
         : null;
     version =
-        json['version'] != null ? new NameAndURL.fromJson(json['version']) : null;
+    json['version'] != null ? new NameAndURL.fromJson(json['version']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -336,7 +336,7 @@ class PokedexNumbers {
   PokedexNumbers.fromJson(Map<String, dynamic> json) {
     entryNumber = json['entry_number'];
     pokedex =
-        json['pokedex'] != null ? new NameAndURL.fromJson(json['pokedex']) : null;
+    json['pokedex'] != null ? new NameAndURL.fromJson(json['pokedex']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -358,7 +358,7 @@ class Varieties {
   Varieties.fromJson(Map<String, dynamic> json) {
     isDefault = json['is_default'];
     pokemon =
-        json['pokemon'] != null ? new NameAndURL.fromJson(json['pokemon']) : null;
+    json['pokemon'] != null ? new NameAndURL.fromJson(json['pokemon']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -398,7 +398,7 @@ class FormDescription{
     else description = "None.";
     if(json!=null)language = NameAndURL.fromJson(json['language']);
     else language = new NameAndURL.fromJson({'name': 'none', 'url':'none'});
-    
+
   }
 
   Map<String, dynamic> toJson(){

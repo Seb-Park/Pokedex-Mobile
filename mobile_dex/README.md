@@ -1,6 +1,6 @@
 # mobile_dex
 
-Pokedéx on your phone.
+A mobile ML pokedex.
 
 ## Getting Started
 

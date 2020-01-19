@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     ]);
     return Scaffold(
       appBar: AppBar(
-        title: Text('National Pokédex'),
+        title: Text('Kanto Pokédex'),
         centerTitle: true,
         backgroundColor: Colors.redAccent,
         elevation: 3,
