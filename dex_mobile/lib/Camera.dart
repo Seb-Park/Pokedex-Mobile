@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:cloudinary_client/models/CloudinaryResponse.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
@@ -89,6 +89,7 @@ class TakePictureScreenState extends State<SnapScreen> {
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
   var urlImagePath;
+  var poke1name;
 
 //  final String imageName;
 
@@ -109,6 +110,11 @@ class DisplayPictureScreen extends StatelessWidget {
     CloudinaryResponse response = (await client.uploadImage(this.imagePath));
 //    print(response.toJson()['url']);
     urlImagePath = response.toJson()['url'];
+    var res = await http.get("http://192.168.7.57:3008/?img=" + urlImagePath);
+    var decodedJson = jsonDecode(res.body);
+    poke1name = (((decodedJson['possible_pokemon'])[0])['name']).toString();
+//    poke1name = decodedJson.toString();
+    print(poke1name);
     print(urlImagePath);
   }
 
@@ -130,10 +136,16 @@ class DisplayPictureScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(
-            'Photo',
+          title:
+          poke1name !=null? Text(
+            poke1name,
             style: TextStyle(color: Colors.black),
-          ),
+          ):
+          Text(
+            "Photo",
+            style: TextStyle(color: Colors.black),
+          )
+          ,
           iconTheme: IconThemeData(
             color: Colors.black, //change your color here
           ),
@@ -143,9 +155,9 @@ class DisplayPictureScreen extends StatelessWidget {
         // constructor with the given path to display the image.
         body: Container(
             child: Align(
-                child: Image.file(File(imagePath)),
+          child: Image.file(File(imagePath)),
 //          child: Text(encodedImg),
-                alignment: Alignment.center,
+          alignment: Alignment.center,
         )));
   }
 }
