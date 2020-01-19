@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:cloudinary_client/models/CloudinaryResponse.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
+import 'package:cloudinary_client/cloudinary_client.dart';
 
 class SnapScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -84,21 +87,33 @@ class TakePictureScreenState extends State<SnapScreen> {
 }
 
 class DisplayPictureScreen extends StatelessWidget {
-  /*static*/ final String imagePath;
+  final String imagePath;
+  var urlImagePath;
+
+//  final String imageName;
 
 //  static File imageFile = new File(imagePath);
 //  static List<int> imageBytes = imageFile.readAsBytesSync();
 //  final String base64Image = base64.encode(imageBytes);
 
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+  DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
 
   void printWrapped(String text) {
     final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
     pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
 
+  void uploadToCloudinary() async {
+    CloudinaryClient client = new CloudinaryClient(
+        "789664171312918", "Z-evOmUdPc5RhOwsBU53lmthzhQ", "dhd22tnja");
+    CloudinaryResponse response = (await client.uploadImage(this.imagePath));
+//    print(response.toJson()['url']);
+    urlImagePath = response.toJson()['url'];
+    print(urlImagePath);
+  }
+
   String encodeImg() {
-    File imageFile = new File(this.imagePath);
+    File imageFile = new File(imagePath);
     List<int> imageBytes = imageFile.readAsBytesSync();
     String base64Image = base64.encode(imageBytes);
 //    printWrapped("{" + base64Image + "} Not shortened");
@@ -107,7 +122,8 @@ class DisplayPictureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String encodedImg = encodeImg();
+//    String encodedImg = encodeImg();
+    uploadToCloudinary();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -127,9 +143,9 @@ class DisplayPictureScreen extends StatelessWidget {
         // constructor with the given path to display the image.
         body: Container(
             child: Align(
-//              child: Image.file(File(imagePath)),
-          child: Text(encodedImg),
-          alignment: Alignment.center,
+                child: Image.file(File(imagePath)),
+//          child: Text(encodedImg),
+                alignment: Alignment.center,
         )));
   }
 }
