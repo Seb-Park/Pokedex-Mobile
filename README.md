@@ -19,6 +19,10 @@ $ python3 -m scripts.label_image_flask --graph=tf_files/retrained_graph.pb
 
 Find the local ip of the machine you're using to run the Flask API and change line 124 of 'Camera.dart' to match that ip with port 3008.
 
+```dart
+  var res = await http.get("http://YOUR.IP.ADDRESS.HERE:3008/?img=" + urlImagePath);
+```
+
 Plug in your device and run the code once the device is connected to the computer. Note that you will need XCode to run on an iOS device.
 
 You can use:
